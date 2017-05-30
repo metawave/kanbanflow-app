@@ -1,0 +1,15 @@
+# Ignore Idea
+.idea/
+
+# Ignore node_modules
+node_modules/
+
+# Ignore Windows Build
+kanbanflow-win32-x64/
+
+# Ignore ZIP Files
+*.zip
+
+# Ignore main.js and only include the typescript file
+main.js
+main.js.map
