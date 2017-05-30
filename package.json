@@ -1,0 +1,30 @@
+{
+  "name": "kanbanflow-app",
+  "version": "1.0.0-beta.1",
+  "description": "A application showing the Kanbanflow Website/App",
+  "main": "main.js",
+  "repository": "https://github.com/metawave/kanbanflow-app.git",
+  "scripts": {
+    "compile": "tsc",
+    "package": "electron-packager . kanbanflow --plattform=win32 --arch=x64 --icon=appicon.ico",
+    "start": "electron ."
+  },
+  "keywords": [
+    "kanbanflow",
+    "kanban",
+    "app",
+    "webapp"
+  ],
+  "author": "Marcel Ryser",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "electron-config": "^1.0.0",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "electron": "^1.7.2",
+    "electron-packager": "^8.7.0",
+    "typescript": "^2.3.3",
+    "typings": "^2.1.1"
+  }
+}

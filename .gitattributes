@@ -1,0 +1,15 @@
+# Convert to LF on Commit/Checkout for files detected as text and leave binary files untouched
+* text eol=lf
+
+# windows bat files have crlf
+*.bat text eol=crlf
+
+# these files are definitely binary
+*.ico binary
+*.gif binary
+*.jpg binary
+*.png binary
+*.jar binary
+*.war binary
+*.pdf binary
+*.zip binary
