@@ -6,7 +6,7 @@
   "repository": "https://github.com/metawave/kanbanflow-app.git",
   "scripts": {
     "compile": "tsc",
-    "package": "electron-packager . kanbanflow --plattform=win32 --arch=x64 --icon=appicon.ico",
+    "package": "electron-zip-packager . kanbanflow --platform=darwin,win32,linux --arch=x64 --icon=appicon.ico",
     "start": "electron ."
   },
   "keywords": [
@@ -24,6 +24,7 @@
   "devDependencies": {
     "electron": "^1.7.2",
     "electron-packager": "^8.7.0",
+    "electron-zip-packager": "^4.0.2",
     "typescript": "^2.3.3",
     "typings": "^2.1.1"
   }

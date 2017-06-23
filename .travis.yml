@@ -1,0 +1,34 @@
+# Use the new trusty image
+dist: trusty
+sudo: false
+
+# Node LTS version
+language: node_js
+node_js: '7'
+
+# Cache yarn
+cache: yarn
+
+addons:
+  apt:
+    packages:
+    # Install Wine, so we can build win32 packages
+    - wine
+
+# Run package.json scripts
+script:
+- yarnpkg compile
+- yarnpkg package
+
+# Deploy tags to github releases
+deploy:
+  provider: releases
+  api_key:
+    secure: aF/BGf3zevnXbBN76OAMnL4Kbpxvm46o2LPOCYyVntorzqT1rHeA7/U1dPbKv5/hfi/X2nC8FwNHFiURr8p6op7Fox7SRsMfnJfTxq+ziuZ5sVzBfWFbzoxB3Q0jRga5yDv398b8mc68EhoQGfM8duOraLihdF2ooJU/dK8mJBGon5JAaNK0SIEcOTUvw+mwj7RMcj8pzqID5HoEG3GjnJlrwnTpUKy064Ll5LOHbmZruY8z/Edhw7yvLy6qOQHDRHbNlZ5sQD2w5dpEsNrswjAmNEvmHq1gc8nrP8PMVKpLMHVxQUtAh8X9ZjBz24k3Q6224nSwSw9hw2aNywrM0uxXsTl5IeeaHUmxUufCwlhM3zBX7q4fp1PQdl2vVky5TJya/0wLu9pyaHmszmhrh/7107HMupTXDo9MJvXN+vjtrvSGSktsidda6O5VxDKl3VLQ9jHKjSSUVoXz9sBtA/I3uHsBck9xsamJ6ufiwTo/NRLNJzWh4GgUfr+JyQJ6C/Qp+9h8inN+9YpP6UmbsObWK/rOWClAkQtrQn49zUAcSroDsALrJGU8nyn39O2ltjJm4Abn/ZjW6SKrct/3fdYT1LBgkZ+6wea9M8nWWRsXRtmOWZPv3pcKiNGYs0eWj6kjhG0BcT8r1aw1YH5Bi5MdUtBFAD7iNbqwFRpaENw=
+  skip_cleanup: true
+  file:
+    - kanbanflow-darwin-x64.zip
+    - kanbanflow-win32-x64.zip
+    - kanbanflow-linux-x64.zip
+  on:
+    tags: true
