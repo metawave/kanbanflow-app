@@ -4,7 +4,7 @@
 This app wraps the great kanbanflow.com application as a standalone app.
 
 
-![Screenshot](kanbanflow.png)
+![Screenshot](KanbanFlow.png)
 
 ## Usage
 
