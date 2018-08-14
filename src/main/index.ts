@@ -3,7 +3,7 @@ import * as url from "url";
 const {app, BrowserWindow, Menu, net, dialog} = require('electron');
 import Rectangle = Electron.Rectangle;
 const Config = require('electron-config');
-const pkg = require('./package.json');
+const pkg = require('../../package.json');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

@@ -1,31 +1,66 @@
 {
-  "name": "kanbanflow-app",
-  "version": "1.0.0-beta.1",
+  "name": "KanbanFlow",
+  "version": "1.0.0-beta.2",
+  "author": "Marcel Ryser",
   "description": "A application showing the Kanbanflow Website/App",
-  "main": "main.js",
-  "repository": "https://github.com/metawave/kanbanflow-app.git",
-  "scripts": {
-    "compile": "tsc",
-    "package": "electron-zip-packager . kanbanflow --platform=darwin,win32,linux --arch=x64 --icon=appicon.ico",
-    "start": "electron ."
-  },
   "keywords": [
     "kanbanflow",
     "kanban",
     "app",
     "webapp"
   ],
-  "author": "Marcel Ryser",
-  "license": "CC0-1.0",
+  "repository": "https://github.com/metawave/kanbanflow-app.git",
+  "scripts": {
+    "compile": "electron-webpack",
+    "icons": "npm-run-all icons-png icons-ico icons-icns",
+    "icons-png": "./bin/convertToPng KanbanFlowLogo.png resources/icons/512x512.png",
+    "icons-icns": "./bin/convertToIcns KanbanFlowLogo.png resources/icon.icns",
+    "icons-ico": "./bin/convertToIco KanbanFlowLogo.png resources/icon.ico",
+    "dev": "electron-webpack dev",
+    "dist": "yarn compile && electron-builder",
+    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+  },
+  "build": {
+    "appId": "ch.metawave.kanbanflow-app",
+    "directories": {
+      "buildResources": "resources"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [ "x64"]
+        },
+        {
+          "target": "zip",
+          "arch": [ "x64"]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [ "x64"]
+        }
+      ]
+    },
+    "publish": null
+  },
   "dependencies": {
     "electron-config": "^1.0.0",
+    "source-map-support": "^0.5.8",
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "electron": "^1.7.2",
-    "electron-packager": "^8.7.0",
-    "electron-zip-packager": "^4.0.2",
-    "typescript": "^2.3.3",
-    "typings": "^2.1.1"
+    "@types/electron-config": "^0.2.1",
+    "@types/node": "^10.5.8",
+    "electron": "^2.0.0",
+    "electron-builder": "^20.28.1",
+    "electron-webpack": "^2.1.2",
+    "electron-webpack-ts": "^2.0.2",
+    "tslint": "^5.11.0",
+    "typescript": "^2.8.1",
+    "webpack": "^4.16.5"
   }
 }
