@@ -1,7 +1,9 @@
 import * as electron from "electron";
+import {app, BrowserWindow, Menu} from "electron";
 import * as url from "url";
-const {app, BrowserWindow, Menu, net, dialog} = require('electron');
+import {autoUpdater} from "electron-updater";
 import Rectangle = Electron.Rectangle;
+
 const Config = require('electron-config');
 const pkg = require('../../package.json');
 
@@ -121,13 +123,34 @@ function createWindow() {
             submenu: [
                 {
                     label: 'About',
-                    click () {
+                    click() {
                         electron.shell.openExternal('https://github.com/metawave/kanbanflow-app')
                     }
                 }
             ]
         }
     ];
+
+    // MacOS has a slightly different menu
+    if (process.platform === 'darwin') {
+
+        // Remove quit from File menu since this will be in the AppMenu
+        menuTemplate[0].submenu.pop();
+
+        const name = app.getName();
+        menuTemplate.unshift({
+            label: name,
+            submenu: [
+                {
+                    label: 'Quit',
+                    accelerator: 'CmdOrCtrl+Q',
+                    click() {
+                        app.quit();
+                    }
+                },
+            ]
+        });
+    }
 
     // open devtools
     //mainWindow.webContents.openDevTools();
@@ -175,7 +198,7 @@ function createWindow() {
     });
 
     // At last, check for app updates
-    checkUpdate();
+    autoUpdater.checkForUpdatesAndNotify();
 }
 
 function handleLinkClick(e, reqUrl) {
@@ -187,30 +210,6 @@ function handleLinkClick(e, reqUrl) {
         e.preventDefault();
         electron.shell.openExternal(reqUrl);
     }
-}
-
-function checkUpdate() {
-    const request = net.request('https://raw.githubusercontent.com/metawave/kanbanflow-app/master/version.txt');
-    request.on('response', (response) => {
-        response.on('data', (chunk) => {
-            let data = chunk.toString('utf8');
-
-            if (pkg.version !== data) {
-                dialog.showMessageBox(mainWindow, {
-                    type: 'info',
-                    title: 'Update available',
-                    message: 'A new version is available: ' + data + '\nYou have: ' + pkg.version + '\n\n' +
-                    'Do you want to download the new version?',
-                    buttons: ['Yes', 'No']
-                }, function (response) {
-                    if (response === 0) {
-                        electron.shell.openExternal('https://github.com/metawave/kanbanflow-app/releases');
-                    }
-                });
-            }
-        });
-    });
-    request.end();
 }
 
 // This method will be called when Electron has finished
