@@ -139,6 +139,9 @@ function createWindow() {
 
     const menu = Menu.buildFromTemplate(menuTemplate);
     mainWindow.setMenu(menu);
+    if (process.platform === 'darwin') {
+        Menu.setApplicationMenu(menu);
+    }
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({

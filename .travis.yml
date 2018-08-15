@@ -4,7 +4,7 @@ sudo: false
 
 # Node LTS version
 language: node_js
-node_js: '7'
+node_js: '8'
 
 # Cache yarn
 cache: yarn
