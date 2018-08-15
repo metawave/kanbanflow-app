@@ -8,4 +8,4 @@ before_install:
 # Run package.json scripts
 script:
 - yarn install
-- yarn dist -wml --publish
+- yarn dist -wml --publish always
