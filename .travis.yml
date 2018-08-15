@@ -1,20 +1,11 @@
-# Use the new trusty image
-dist: trusty
-sudo: false
+# Use osx
+os: osx
 
-# Node LTS version
-language: node_js
-node_js: '8'
-
-# Cache yarn
-cache: yarn
-
-addons:
-  apt:
-    packages:
-    # Install Wine, so we can build win32 packages
-    - wine
+# Install needed software
+before_install:
+  - brew install yarn wine
 
 # Run package.json scripts
 script:
-- yarnpkg dist
+- yarn install
+- yarn dist -wml --publish

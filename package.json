@@ -45,7 +45,7 @@
         }
       ]
     },
-    "publish": null
+    "publish": "github"
   },
   "dependencies": {
     "electron-config": "^1.0.0",
