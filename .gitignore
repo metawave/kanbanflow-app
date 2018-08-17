@@ -4,12 +4,12 @@
 # Ignore node_modules
 node_modules/
 
-# Ignore Windows Build
-kanbanflow-win32-x64/
+# Ignore Distribution
+dist/
 
-# Ignore ZIP Files
-*.zip
+# Ignore Build
+build/
 
-# Ignore main.js and only include the typescript file
-main.js
-main.js.map
+# Ignore Platform Files
+.DS_Store
+Thumbs.db
