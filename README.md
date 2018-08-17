@@ -10,4 +10,4 @@ This app wraps the great kanbanflow.com application as a standalone app.
 
 Login with your credentials and get work done!
 
-Use Alt (macOS: Option) key to bring up the menu, where you can increase/decrease zoom-factor and also reload the webapp, when you run into unexpected behaviour. 
+Use Alt key to bring up the menu, where you can increase/decrease zoom-factor and also reload the webapp, when you run into unexpected behaviour. 
