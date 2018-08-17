@@ -1,21 +1,23 @@
-import * as electron from "electron";
-import {app, BrowserWindow, Menu} from "electron";
-import * as url from "url";
-import {autoUpdater} from "electron-updater";
-import Rectangle = Electron.Rectangle;
-
-const Config = require('electron-config');
-const pkg = require('../../package.json');
+import * as Electron from 'electron';
+import { app, BrowserWindow, Menu, Rectangle } from 'electron';
+import * as url from 'url';
+import { autoUpdater } from 'electron-updater';
+import * as ElectronStore from 'electron-store';
+import * as pkg from '../../package.json';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow;
 
 // Config store for storing some settings
-const conf = new Config(pkg.name, {
-    zoomFactor: 1.0,
-    windowConfig: {x: null, y: null, width: 1440, height: 900}
-});
+const conf = new ElectronStore({
+        name: (<any>pkg).name,
+        defaults: {
+            zoomFactor: 1.0,
+            windowConfig: {x: null, y: null, width: 1440, height: 900}
+        }
+    }
+);
 
 function getWindowConfig(): Rectangle {
     let posX = conf.get('windowPosX');
@@ -25,7 +27,7 @@ function getWindowConfig(): Rectangle {
 
     // check if window is on a screen
 
-    let displays = electron.screen.getAllDisplays();
+    let displays = Electron.screen.getAllDisplays();
     let displayContainingWindow = displays.filter((display) => {
         return rectContains(display.bounds, {x: posX, y: posY, width, height});
     });
@@ -50,7 +52,7 @@ function rectContains(bigRect: Rectangle, smallRect: Rectangle): boolean {
         bigRect.y + bigRect.height >= smallRect.y + smallRect.height;
 }
 
-function setWindowConfig(rectangle): void {
+function setWindowConfig(rectangle: Rectangle): void {
     conf.set({
         windowPosX: rectangle.x,
         windowPosY: rectangle.y,
@@ -84,7 +86,7 @@ function createWindow() {
         });
 
     // Simple Menu for Exit and View-Zoom
-    const menuTemplate = [
+    const menuTemplate: Electron.MenuItemConstructorOptions[] = [
         {
             label: 'File',
             submenu: [
@@ -124,7 +126,7 @@ function createWindow() {
                 {
                     label: 'About',
                     click() {
-                        electron.shell.openExternal('https://github.com/metawave/kanbanflow-app')
+                        Electron.shell.openExternal('https://github.com/metawave/kanbanflow-app')
                     }
                 }
             ]
@@ -135,10 +137,10 @@ function createWindow() {
     if (process.platform === 'darwin') {
 
         // Remove quit from File menu since this will be in the AppMenu
-        menuTemplate[0].submenu.pop();
+        (menuTemplate[0].submenu as Electron.MenuItemConstructorOptions[]).pop();
 
         const name = app.getName();
-        menuTemplate.unshift({
+        const osxMenu: Electron.MenuItemConstructorOptions = {
             label: name,
             submenu: [
                 {
@@ -147,9 +149,10 @@ function createWindow() {
                     click() {
                         app.quit();
                     }
-                },
+                }
             ]
-        });
+        };
+        menuTemplate.unshift(osxMenu);
     }
 
     // open devtools
@@ -168,7 +171,7 @@ function createWindow() {
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
-        pathname: "kanbanflow.com",
+        pathname: 'kanbanflow.com',
         protocol: 'https:',
         slashes: true
     }));
@@ -208,7 +211,7 @@ function handleLinkClick(e, reqUrl) {
     // is external, eg. not kanbanflow?
     if (reqHost && reqHost != getHost(mainWindow.webContents.getURL())) {
         e.preventDefault();
-        electron.shell.openExternal(reqUrl);
+        Electron.shell.openExternal(reqUrl);
     }
 }
 
