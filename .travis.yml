@@ -3,11 +3,11 @@ os: osx
 
 # Install needed software
 before_install:
-  - brew install yarn
+  - brew install yarn imagemagick
 
 # Run package.json scripts
 script:
 - yarn install
-- yarn icons
-- yarn make
-- yarn publish
+- yarn run icons
+- yarn run make
+- yarn run publish
