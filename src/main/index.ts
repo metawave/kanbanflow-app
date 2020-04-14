@@ -3,7 +3,7 @@ import { app, BrowserWindow, Menu, Rectangle } from 'electron';
 import * as url from 'url';
 import { autoUpdater } from 'electron-updater';
 import Store = require('electron-store');
-import * as pkg from '../package.json';
+import * as pkg from '../../package.json';
 import Event = Electron.Event;
 
 // Keep a global reference of the window object, if you don't, the window will
