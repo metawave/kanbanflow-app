@@ -8,4 +8,6 @@ before_install:
 # Run package.json scripts
 script:
 - yarn install
-- yarn dist -wml --publish onTagOrDraft
+- yarn icons
+- yarn make
+- yarn publish

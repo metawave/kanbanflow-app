@@ -2,16 +2,22 @@ import * as Electron from 'electron';
 import { app, BrowserWindow, Menu, Rectangle } from 'electron';
 import * as url from 'url';
 import { autoUpdater } from 'electron-updater';
-import * as ElectronStore from 'electron-store';
-import * as pkg from '../../package.json';
+import Store = require('electron-store');
+import * as pkg from '../package.json';
+import Event = Electron.Event;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: Electron.BrowserWindow;
 
 // Config store for storing some settings
-const conf = new ElectronStore({
-        name: (<any>pkg).name,
+type StoreType = {
+    zoomFactor: number;
+    windowConfig: Rectangle;
+    windowMaximized?: boolean;
+}
+const conf = new Store<StoreType>({
+        name: pkg.name,
         defaults: {
             zoomFactor: 1.0,
             windowConfig: {x: null, y: null, width: 1440, height: 900}
@@ -19,16 +25,23 @@ const conf = new ElectronStore({
     }
 );
 
+function rectContains(bigRect: Rectangle, smallRect: Rectangle): boolean {
+    return bigRect.x <= smallRect.x &&
+        bigRect.y <= smallRect.y &&
+        bigRect.x + bigRect.width >= smallRect.x + smallRect.width &&
+        bigRect.y + bigRect.height >= smallRect.y + smallRect.height;
+}
+
 function getWindowConfig(): Rectangle {
-    let posX = conf.get('windowPosX');
-    let posY = conf.get('windowPosY');
-    let width = conf.get('windowWidth');
-    let height = conf.get('windowHeight');
+    let posX = conf.get('windowConfig').x;
+    let posY = conf.get('windowConfig').y;
+    const width = conf.get('windowConfig').width;
+    const height = conf.get('windowConfig').height;
 
     // check if window is on a screen
 
-    let displays = Electron.screen.getAllDisplays();
-    let displayContainingWindow = displays.filter((display) => {
+    const displays = Electron.screen.getAllDisplays();
+    const displayContainingWindow = displays.filter((display) => {
         return rectContains(display.bounds, {x: posX, y: posY, width, height});
     });
 
@@ -45,29 +58,24 @@ function getWindowConfig(): Rectangle {
     }
 }
 
-function rectContains(bigRect: Rectangle, smallRect: Rectangle): boolean {
-    return bigRect.x <= smallRect.x &&
-        bigRect.y <= smallRect.y &&
-        bigRect.x + bigRect.width >= smallRect.x + smallRect.width &&
-        bigRect.y + bigRect.height >= smallRect.y + smallRect.height;
+function handleLinkClick(e: Event, reqUrl: string): void {
+    const getHost = (urlString: string): string => url.parse(urlString).host;
+    const reqHost = getHost(reqUrl);
+
+    // is external, eg. not kanbanflow?
+    if (reqHost && reqHost != getHost(mainWindow.webContents.getURL())) {
+        e.preventDefault();
+        Electron.shell.openExternal(reqUrl);
+    }
 }
 
-function setWindowConfig(rectangle: Rectangle): void {
-    conf.set({
-        windowPosX: rectangle.x,
-        windowPosY: rectangle.y,
-        windowWidth: rectangle.width,
-        windowHeight: rectangle.height
-    })
-}
-
-function createWindow() {
+function createWindow(): void {
 
     // restore some settings
-    let zFactor = conf.get('zoomFactor');
+    const zFactor = conf.get('zoomFactor');
 
     // get window config
-    let windowConfig = getWindowConfig();
+    const windowConfig = getWindowConfig();
 
     // Create the browser window.
     mainWindow = new BrowserWindow(
@@ -86,7 +94,7 @@ function createWindow() {
         });
 
     // Simple Menu for Exit and View-Zoom
-    let menuTemplate: Electron.MenuItemConstructorOptions[] = [
+    const menuTemplate: Electron.MenuItemConstructorOptions[] = [
         {
             label: 'File',
             submenu: [
@@ -117,12 +125,12 @@ function createWindow() {
             submenu: [
                 {
                     label: 'Zoom In',
-                    role: 'zoomin',
+                    role: 'zoomIn',
                     accelerator: 'CmdOrCtrl+Shift+3'
                 },
                 {
                     label: 'Zoom Out',
-                    role: 'zoomout',
+                    role: 'zoomOut',
                     accelerator: 'CmdOrCtrl+Shift+2'
                 },
                 {
@@ -130,7 +138,7 @@ function createWindow() {
                 },
                 {
                     label: 'Reset Zoom',
-                    role: 'resetzoom',
+                    role: 'resetZoom',
                     accelerator: 'CmdOrCtrl+Shift+1'
                 }
             ]
@@ -140,7 +148,7 @@ function createWindow() {
             submenu: [
                 {
                     label: 'About',
-                    click() {
+                    click(): void {
                         Electron.shell.openExternal('https://github.com/metawave/kanbanflow-app')
                     }
                 }
@@ -161,7 +169,7 @@ function createWindow() {
                 {
                     label: 'Quit',
                     accelerator: 'CmdOrCtrl+Q',
-                    click() {
+                    click(): void {
                         app.quit();
                     }
                 }
@@ -192,12 +200,10 @@ function createWindow() {
     }));
 
     mainWindow.on('close', function () {
-        mainWindow.webContents.getZoomFactor(function (zoomFactor) {
-            conf.set('zoomFactor', zoomFactor)
-        });
+        conf.set('zoomFactor', mainWindow.webContents.zoomFactor);
 
         // Window positions and size
-        setWindowConfig(mainWindow.getBounds());
+        conf.set('windowConfig', mainWindow.getBounds());
 
         // Is it maximized?
         conf.set('windowMaximized', mainWindow.isMaximized());
@@ -219,38 +225,27 @@ function createWindow() {
     autoUpdater.checkForUpdatesAndNotify();
 }
 
-function handleLinkClick(e, reqUrl) {
-    let getHost = URL => url.parse(URL).host;
-    let reqHost = getHost(reqUrl);
-
-    // is external, eg. not kanbanflow?
-    if (reqHost && reqHost != getHost(mainWindow.webContents.getURL())) {
-        e.preventDefault();
-        Electron.shell.openExternal(reqUrl);
-    }
-}
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
-        app.quit()
+        app.quit();
     }
 });
 
-app.on('activate', function () {
+app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (mainWindow === null) {
-        createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
     }
 });
 
 // In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+// code. You can also put them in separate files and import them here.

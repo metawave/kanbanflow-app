@@ -1,8 +1,9 @@
 {
-  "name": "KanbanFlow",
+  "name": "kanbanflow-app",
   "version": "1.0.0-beta.2",
   "author": "Marcel Ryser",
   "description": "A application showing the Kanbanflow Website/App",
+  "main": ".webpack/main",
   "keywords": [
     "kanbanflow",
     "kanban",
@@ -11,63 +12,104 @@
   ],
   "repository": "https://github.com/metawave/kanbanflow-app.git",
   "scripts": {
-    "compile": "electron-webpack",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts .",
     "icons": "npm-run-all icons-png icons-ico icons-icns",
     "icons-png": "./bin/convertToPng KanbanFlowLogo.png resources/icons/512x512.png",
     "icons-icns": "./bin/convertToIcns KanbanFlowLogo.png resources/icon.icns",
-    "icons-ico": "./bin/convertToIco KanbanFlowLogo.png resources/icon.ico",
-    "dev": "electron-webpack dev",
-    "dist": "yarn compile && electron-builder",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "icons-ico": "./bin/convertToIco KanbanFlowLogo.png resources/icon.ico"
   },
-  "build": {
-    "appId": "ch.metawave.kanbanflow-app",
-    "directories": {
-      "buildResources": "resources"
-    },
-    "win": {
-      "target": [
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "resources/icon",
+        "platform": "all"
+      },
+      "makers": [
         {
-          "target": "portable",
-          "arch": [
-            "x64"
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "kanbanflow_app"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux",
+            "win32"
           ]
         },
         {
-          "target": "zip",
-          "arch": [
-            "x64"
-          ]
-        }
-      ]
-    },
-    "linux": {
-      "target": [
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
         {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
         }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "metawave",
+              "name": "kanbanflow-app"
+            },
+            "prerelease": true
+          }
+        }
+      ],
+      "plugins": [
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": "./webpack.main.config.js",
+            "renderer": {
+              "config": "./webpack.renderer.config.js",
+              "entryPoints": [
+                {
+                  "js": "./src/renderer.ts",
+                  "name": "main_window"
+                }
+              ]
+            }
+          }
+        ]
       ]
     }
   },
-  "dependencies": {
-    "electron-store": "^2.0.0",
-    "electron-updater": "^3.1.1",
-    "source-map-support": "^0.5.8",
-    "url": "^0.11.0"
-  },
   "devDependencies": {
-    "@types/electron-config": "^0.2.1",
-    "@types/es6-collections": "^0.5.31",
-    "@types/node": "^10.7.1",
-    "electron": "^2.0.0",
-    "electron-builder": "^20.28.1",
-    "electron-webpack": "^2.1.2",
-    "electron-webpack-ts": "^2.0.2",
-    "tslint": "^5.11.0",
-    "typescript": "^3.0.1",
-    "webpack": "^4.16.5"
+    "@electron-forge/cli": "6.0.0-beta.50",
+    "@electron-forge/maker-deb": "6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.50",
+    "@electron-forge/maker-zip": "6.0.0-beta.50",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.50",
+    "@electron-forge/publisher-github": "^6.0.0-beta.50",
+    "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
+    "css-loader": "^3.0.0",
+    "electron": "8.2.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.0",
+    "fork-ts-checker-webpack-plugin": "^3.1.1",
+    "node-loader": "^0.6.0",
+    "npm-run-all": "^4.1.5",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.0"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^5.1.1",
+    "electron-updater": "^4.2.5",
+    "url": "^0.11.0"
   }
 }
