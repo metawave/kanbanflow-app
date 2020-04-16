@@ -3,7 +3,7 @@ os: osx
 
 # Install needed software
 before_install:
-  - brew install yarn imagemagick mono
+  - brew install yarn imagemagick mono make cmake
   - brew cask install wine-stable
 
 # Run package.json scripts
