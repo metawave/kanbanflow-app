@@ -62,7 +62,7 @@
     "@types/node": "^13.11.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
-    "electron": "^8.2.0",
+    "electron": "^8.5.1",
     "electron-builder": "^22.5.0",
     "electron-webpack": "^2.8.0",
     "electron-webpack-eslint": "^6.0.0",
