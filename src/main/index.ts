@@ -54,13 +54,13 @@ function getWindowConfig(): Rectangle {
     }
 }
 
-function handleLinkClick(e: Event, reqUrl: string): void {
+function handleLinkClick(e: Event | undefined, reqUrl: string): void {
     const getHost = (urlString: string): string => new URL(urlString).host;
     const reqHost = getHost(reqUrl);
 
     // is external, eg. not kanbanflow?
     if (reqHost && reqHost != getHost(mainWindow.webContents.getURL())) {
-        e.preventDefault();
+        if (e !== undefined) e.preventDefault();
         shell.openExternal(reqUrl);
     }
 }
@@ -203,7 +203,10 @@ function createWindow(): void {
 
     // open external links always in system browser instead of kanban app
     mainWindow.webContents.on('will-navigate', handleLinkClick);
-    mainWindow.webContents.on('new-window', handleLinkClick);
+    mainWindow.webContents.setWindowOpenHandler((details => {
+        handleLinkClick(undefined, details.url);
+        return { action: "deny" };
+    }))
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
