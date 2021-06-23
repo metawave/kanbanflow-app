@@ -9,6 +9,7 @@ dist/
 
 # Ignore Build
 build/
+tsc/
 
 # Ignore Platform Files
 .DS_Store

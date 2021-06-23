@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "module": "commonjs",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "noImplicitAny": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    "target": "ES6",
     "outDir": "dist",
-    "moduleResolution": "node",
+    "baseUrl": ".",
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "paths": {
       "*": ["node_modules/*"]
