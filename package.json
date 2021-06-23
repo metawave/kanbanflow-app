@@ -25,6 +25,7 @@
   },
   "build": {
     "appId": "ch.metawave.kanbanflow-app",
+    "productName": "KanbanFlow App",
     "directories": {
       "buildResources": "resources"
     },
@@ -45,6 +46,7 @@
       ]
     },
     "linux": {
+      "category": "Office",
       "target": [
         {
           "target": "AppImage",
