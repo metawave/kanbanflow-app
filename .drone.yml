@@ -1,0 +1,10 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: build kanbanflow
+    image: registry.metawave.ch/metawave/buildenv
+    commands:
+      - yarn install
+      - yarn dist -wml --publish onTagOrDraft
