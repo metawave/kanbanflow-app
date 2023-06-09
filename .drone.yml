@@ -6,6 +6,6 @@ steps:
   - name: build kanbanflow
     image: electronuserland/builder:wine
     commands:
-      - wine --version
+      - wine64 --version
       - yarn install
       - yarn dist -wl --publish onTagOrDraft
