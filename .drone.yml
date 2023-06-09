@@ -7,4 +7,4 @@ steps:
     image: registry.metawave.ch/metawave/buildenv
     commands:
       - yarn install
-      - yarn dist -wml --publish onTagOrDraft
+      - yarn dist -wl --publish onTagOrDraft
