@@ -4,7 +4,7 @@ name: default
 
 steps:
   - name: build kanbanflow
-    image: registry.metawave.ch/metawave/buildenv
+    image: electronuserland/builder:wine
     commands:
       - yarn install
       - yarn dist -wl --publish onTagOrDraft
