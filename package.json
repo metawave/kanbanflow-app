@@ -65,7 +65,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.27.0",
     "@typescript-eslint/parser": "^4.27.0",
-    "electron": "^13.1.0",
+    "electron": "^22.3.25",
     "electron-builder": "^22.11.0",
     "eslint": "^7.28.0",
     "typescript": "^4.3.4"
