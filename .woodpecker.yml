@@ -1,4 +1,10 @@
 steps:
+  - name: qemu
+    privileged: true
+    image: multiarch/qemu-user-static
+    commands:
+      - /register --reset -p yes
+
   - name: build kanbanflow
     image: electronuserland/builder:wine
     commands:
