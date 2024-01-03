@@ -1,7 +1,3 @@
-kind: pipeline
-type: docker
-name: default
-
 steps:
   - name: build kanbanflow
     image: electronuserland/builder:wine
