@@ -58,7 +58,7 @@
     }
   },
   "dependencies": {
-    "electron-store": "^8.0.0",
+    "electron-store": "^9.0.0",
     "electron-updater": "^4.3.0",
     "url": "^0.11.0"
   },
