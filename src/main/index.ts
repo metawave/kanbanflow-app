@@ -1,26 +1,40 @@
-import { app, screen, shell, BrowserWindow, MenuItemConstructorOptions, Menu, Rectangle, Event } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import {app, BrowserWindow, Event, Menu, MenuItemConstructorOptions, Rectangle, screen, shell} from 'electron';
+import {autoUpdater} from 'electron-updater';
 import * as pkg from '../../package.json';
-import ElectronStore from 'electron-store';
+import Store, {Schema} from 'electron-store';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow;
 
 // Config store for storing some settings
-type StoreType = {
-    zoomFactor: number;
-    windowConfig: Rectangle;
-    windowMaximized?: boolean;
-}
-const conf = new ElectronStore<StoreType>({
-        name: pkg.name,
-        defaults: {
-            zoomFactor: 1.0,
-            windowConfig: {x: null, y: null, width: 1440, height: 900}
-        }
+const confSchema : Schema<any> = {
+    zoomFactor: {
+        type: 'number',
+        default: 1.0
+    },
+    windowX: {
+        type: 'number',
+        default: 0
+    },
+    windowY: {
+        type: 'number',
+        default: 0
+    },
+    windowWidth: {
+        type: 'number',
+        default: 1440
+    },
+    windowHeight: {
+        type: 'number',
+        default: 900
+    },
+    windowMaximized: {
+        type: 'boolean',
+        default: false
     }
-);
+};
+const conf = new Store({name: pkg.name, schema: confSchema});
 
 function rectContains(bigRect: Rectangle, smallRect: Rectangle): boolean {
     return bigRect.x <= smallRect.x &&
@@ -30,10 +44,10 @@ function rectContains(bigRect: Rectangle, smallRect: Rectangle): boolean {
 }
 
 function getWindowConfig(): Rectangle {
-    let posX = conf.get('windowConfig').x;
-    let posY = conf.get('windowConfig').y;
-    const width = conf.get('windowConfig').width;
-    const height = conf.get('windowConfig').height;
+    let posX = conf.get('windowX') as number|undefined;
+    let posY = conf.get('windowY') as number|undefined;
+    const width = conf.get('windowWith') as number|undefined;
+    const height = conf.get('windowHeight') as number|undefined;
 
     // check if window is on a screen
     const displays = screen.getAllDisplays();
@@ -68,7 +82,7 @@ function handleLinkClick(e: Event | undefined, reqUrl: string): void {
 function createWindow(): void {
 
     // restore some settings
-    const zFactor = conf.get('zoomFactor');
+    const zFactor = conf.get('zoomFactor') as number|undefined;
 
     // get window config
     const windowConfig = getWindowConfig();
@@ -195,7 +209,11 @@ function createWindow(): void {
         conf.set('zoomFactor', mainWindow.webContents.zoomFactor);
 
         // Window positions and size
-        conf.set('windowConfig', mainWindow.getBounds());
+        const windowBounds = mainWindow.getBounds();
+        conf.set('windowX', windowBounds.x);
+        conf.set('windowY', windowBounds.y);
+        conf.set('windowWidth', windowBounds.width);
+        conf.set('windowHeight', windowBounds.height);
 
         // Is it maximized?
         conf.set('windowMaximized', mainWindow.isMaximized());
@@ -205,7 +223,7 @@ function createWindow(): void {
     mainWindow.webContents.on('will-navigate', handleLinkClick);
     mainWindow.webContents.setWindowOpenHandler((details => {
         handleLinkClick(undefined, details.url);
-        return { action: "deny" };
+        return {action: "deny"};
     }))
 
     // Emitted when the window is closed.
