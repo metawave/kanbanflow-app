@@ -1,6 +1,0 @@
-steps:
-  - name: build kanbanflow
-    image: electronuserland/builder:wine
-    commands:
-      - yarn install
-      - yarn dist -wl --publish onTagOrDraft
