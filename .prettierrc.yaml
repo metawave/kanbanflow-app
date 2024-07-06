@@ -1,0 +1,14 @@
+# Use single quotes for strings, because that is the Angular default
+singleQuote: true
+
+# The following settings prevent excessive use of vertical space
+bracketSameLine: true # avoid closing '>' each on its own line
+
+# Line endings are converted to lf using git, but may be checked out as crlf on windows
+endOfLine: lf
+
+# We prefer to use more horizontal space than the prettier default of 80, esp. for html
+printWidth: 100
+
+plugins:
+  - 'prettier-plugin-sh'

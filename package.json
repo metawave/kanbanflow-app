@@ -19,6 +19,7 @@
     "build": "tsc --outDir ./tsc",
     "watch": "tsc -w --outDir ./tsc",
     "lint": "eslint ./src",
+    "prettify": "prettier --write --ignore-unknown '**/*.*'",
     "start": "yarn build && electron ./tsc/src/main/index.js",
     "dist": "yarn build && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
@@ -69,8 +70,10 @@
     "@typescript-eslint/parser": "^7.15.0",
     "electron": "^31.1.0",
     "electron-builder": "^24.13.3",
-    "eslint": "8.57.0",
+    "eslint": "^9.6.0",
     "globals": "^15.8.0",
+    "prettier": "^3.3.2",
+    "prettier-plugin-sh": "^0.14.0",
     "typescript": "^5.5.3",
     "typescript-eslint": "^7.15.0"
   }
