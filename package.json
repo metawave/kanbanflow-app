@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "electron-store": "^8.2.0",
-    "electron-updater": "6.1.8",
+    "electron-updater": "6.2.1",
     "url": "^0.11.0"
   },
   "devDependencies": {
