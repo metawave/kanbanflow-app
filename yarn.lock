@@ -960,10 +960,10 @@ electron-store@^8.2.0:
     conf "^10.2.0"
     type-fest "^2.17.0"
 
-electron-updater@6.3.0:
-  version "6.3.0"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.3.0.tgz#13a5c3c3f0b2b114fe33181e24a8270096734b3e"
-  integrity sha512-3Xlezhk+dKaSQrOnkQNqCGiuGSSUPO9BV9TQZ4Iig6AyTJ4FzJONE5gFFc382sY53Sh9dwJfzKsA3DxRHt2btw==
+electron-updater@6.3.1:
+  version "6.3.1"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.3.1.tgz#f233dfa2a3d8bf5b91c9224749faefcff01a9500"
+  integrity sha512-Et9t9LcH42q/A73yu398YGHR7cbdTnHbIyFN/p0FNZIJi10XxGshZBVVE6FsClMuoggw7FVhn1+kMUVMCqS7MA==
   dependencies:
     builder-util-runtime "9.2.5"
     fs-extra "^10.1.0"
