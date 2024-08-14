@@ -974,10 +974,10 @@ electron-store@^8.2.0:
     conf "^10.2.0"
     type-fest "^2.17.0"
 
-electron-updater@6.3.2:
-  version "6.3.2"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.3.2.tgz#d6d4104928a11397b6028b8cdedc90a63615066f"
-  integrity sha512-bEpuZ1IRnMtvZZaWeYi9ocX90Cnk+/impZ/08r6GQkfOMqECtKC2IjvxHcDk2VpWO8QZzK0+MUNaBiO81CGvQQ==
+electron-updater@6.3.3:
+  version "6.3.3"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.3.3.tgz#c1560ad08a3a500aaaf1bab94b4d284573c6415f"
+  integrity sha512-Kj1u6kfyxUyatnspvKa6qhGn82rMZfUD03WOvCGJ12PyRss/AC8kkYsN9IrJihKTlN8nRwTjZ1JM2UUXoD0KsA==
   dependencies:
     builder-util-runtime "9.2.5"
     fs-extra "^10.1.0"
