@@ -68,7 +68,7 @@
     "@types/semver": "^7.5.8",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
-    "electron": "^31.1.0",
+    "electron": "^32.0.0",
     "electron-builder": "^24.13.3",
     "eslint": "^9.6.0",
     "globals": "^15.8.0",
