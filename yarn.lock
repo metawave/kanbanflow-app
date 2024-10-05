@@ -729,14 +729,6 @@ builder-util-runtime@9.2.10:
     debug "^4.3.4"
     sax "^1.2.4"
 
-builder-util-runtime@9.2.9:
-  version "9.2.9"
-  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-9.2.9.tgz#e7d5dcb3a7caa9575406edea28940f6088d7cbb3"
-  integrity sha512-DWeHdrRFVvNnVyD4+vMztRpXegOGaQHodsAjyhstTbUNBIjebxM1ahxokQL+T1v8vpW8SY7aJ5is/zILH82lAw==
-  dependencies:
-    debug "^4.3.4"
-    sax "^1.2.4"
-
 builder-util@25.1.7:
   version "25.1.7"
   resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-25.1.7.tgz#a07b404f0cb1a635aa165902be65297d58932ff8"
@@ -1155,12 +1147,12 @@ electron-store@^8.2.0:
     conf "^10.2.0"
     type-fest "^2.17.0"
 
-electron-updater@6.3.8:
-  version "6.3.8"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.3.8.tgz#2ec6e3860bd722a7b7833d62bffa4442994ab178"
-  integrity sha512-OFsA2vyuOZgsqq4EW6tgW8X8e521ybDmQyIYLqss7HdXev+Ak90YatzpIECOBJXpmro5YDq4yZ2xFsKXqPt1DQ==
+electron-updater@6.3.9:
+  version "6.3.9"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-6.3.9.tgz#e1e7f155624c58e6f3760f376c3a584028165ec4"
+  integrity sha512-2PJNONi+iBidkoC5D1nzT9XqsE8Q1X28Fn6xRQhO3YX8qRRyJ3mkV4F1aQsuRnYPqq6Hw+E51y27W75WgDoofw==
   dependencies:
-    builder-util-runtime "9.2.9"
+    builder-util-runtime "9.2.10"
     fs-extra "^10.1.0"
     js-yaml "^4.1.0"
     lazy-val "^1.0.5"
