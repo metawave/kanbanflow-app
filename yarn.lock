@@ -333,9 +333,9 @@
   integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
 
 "@types/node@*":
-  version "22.7.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.7.4.tgz#e35d6f48dca3255ce44256ddc05dee1c23353fcc"
-  integrity sha512-y+NPi1rFzDs1NdQHHToqeiX2TIS79SWEAw9GYhkkx8bD0ChpfqC+n2j5OXOCpzfojBEBt6DnEnnG9MY0zk1XLg==
+  version "22.7.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.7.5.tgz#cfde981727a7ab3611a481510b473ae54442b92b"
+  integrity sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==
   dependencies:
     undici-types "~6.19.2"
 
@@ -567,10 +567,10 @@ app-builder-bin@5.0.0-alpha.10:
   resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-5.0.0-alpha.10.tgz#cf12e593b6b847fb9d04027fa755c6c6610d778b"
   integrity sha512-Ev4jj3D7Bo+O0GPD2NMvJl+PGiBAfS7pUGawntBNpCbxtpncfUixqFj9z9Jme7V7s3LBGqsWZZP54fxBX3JKJw==
 
-app-builder-lib@25.1.7:
-  version "25.1.7"
-  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-25.1.7.tgz#f8ce8e2edc6d91becbe956b1205da1f3849cafe9"
-  integrity sha512-JxmN+D/Dn7BLQoN+cTFO+zbMHcpI10v/xjyjFO1FKpHbApOG+OQt/xUyVjKWp4FYplIfuHdpxqTXo1PN/Wzm/A==
+app-builder-lib@25.1.8:
+  version "25.1.8"
+  resolved "https://registry.yarnpkg.com/app-builder-lib/-/app-builder-lib-25.1.8.tgz#ae376039c5f269c7d562af494a087e5bc6310f1b"
+  integrity sha512-pCqe7dfsQFBABC1jeKZXQWhGcCPF3rPCXDdfqVKjIeWBcXzyC1iOWZdfFhGl+S9MyE/k//DFmC6FzuGAUudNDg==
   dependencies:
     "@develar/schema-utils" "~2.6.5"
     "@electron/notarize" "2.5.0"
@@ -1064,12 +1064,12 @@ dir-compare@^4.2.0:
     minimatch "^3.0.5"
     p-limit "^3.1.0 "
 
-dmg-builder@25.1.7:
-  version "25.1.7"
-  resolved "https://registry.yarnpkg.com/dmg-builder/-/dmg-builder-25.1.7.tgz#a3bb8e1dc790faec04503568480db80f5077a2cb"
-  integrity sha512-Hac0AfXQrAV62JT99Had6bvUJb/f7vjJTaLOsmA/gAQcrc/cLmNAqCJ0ZZDqwKy2+LKXnxx45TvMXvovKd4iMg==
+dmg-builder@25.1.8:
+  version "25.1.8"
+  resolved "https://registry.yarnpkg.com/dmg-builder/-/dmg-builder-25.1.8.tgz#41f3b725edd896156e891016a44129e1bd580430"
+  integrity sha512-NoXo6Liy2heSklTI5OIZbCgXC1RzrDQsZkeEwXhdOro3FT1VBOvbubvscdPnjVuQ4AMwwv61oaH96AbiYg9EnQ==
   dependencies:
-    app-builder-lib "25.1.7"
+    app-builder-lib "25.1.8"
     builder-util "25.1.7"
     builder-util-runtime "9.2.10"
     fs-extra "^10.1.0"
@@ -1124,15 +1124,15 @@ ejs@^3.1.8:
     jake "^10.8.5"
 
 electron-builder@^25.0.0:
-  version "25.1.7"
-  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-25.1.7.tgz#b3d1504925a4d3693d97c76c0d2f2906613ffe4b"
-  integrity sha512-lsKtX93GSHWnmuteNRvBzgJIjRiiYB0qrJVRjShwBi75Ns+mRdWeOGZiXItqOWj+3g5UyY722kgoq2WlqCB87A==
+  version "25.1.8"
+  resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-25.1.8.tgz#b0e310f1600787610bb84c3f39bc7aadb2548486"
+  integrity sha512-poRgAtUHHOnlzZnc9PK4nzG53xh74wj2Jy7jkTrqZ0MWPoHGh1M2+C//hGeYdA+4K8w4yiVCNYoLXF7ySj2Wig==
   dependencies:
-    app-builder-lib "25.1.7"
+    app-builder-lib "25.1.8"
     builder-util "25.1.7"
     builder-util-runtime "9.2.10"
     chalk "^4.1.2"
-    dmg-builder "25.1.7"
+    dmg-builder "25.1.8"
     fs-extra "^10.1.0"
     is-ci "^3.0.0"
     lazy-val "^1.0.5"
@@ -1455,9 +1455,9 @@ foreground-child@^3.1.0:
     signal-exit "^4.0.1"
 
 form-data@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.0.tgz#93919daeaf361ee529584b9b31664dc12c9fa452"
-  integrity sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/form-data/-/form-data-4.0.1.tgz#ba1076daaaa5bfd7e99c1a6cb02aa0a5cff90d48"
+  integrity sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==
   dependencies:
     asynckit "^0.4.0"
     combined-stream "^1.0.8"
@@ -2585,9 +2585,9 @@ require-from-string@^2.0.2:
   integrity sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==
 
 resedit@^1.7.0:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/resedit/-/resedit-1.7.1.tgz#150c101000210968730141ae2eb504ca0aead165"
-  integrity sha512-/FJ6/gKAXbcHtivannhecWsa43kGVFK3aHHv9Jm3x0eFiM31MoGihkAOWbm3UsvjYLRVw0zTkfARy2dI96JL1Q==
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/resedit/-/resedit-1.7.2.tgz#b1041170b99811710c13f949c7d225871de4cc78"
+  integrity sha512-vHjcY2MlAITJhC0eRD/Vv8Vlgmu9Sd3LX9zZvtGzU5ZImdTN3+d6e/4mnTyV8vEbyf1sgNIrWxhWlrys52OkEA==
   dependencies:
     pe-library "^0.4.1"
 
