@@ -333,16 +333,16 @@
   integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
 
 "@types/node@*":
-  version "22.7.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.7.5.tgz#cfde981727a7ab3611a481510b473ae54442b92b"
-  integrity sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==
+  version "22.7.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.7.7.tgz#6cd9541c3dccb4f7e8b141b491443f4a1570e307"
+  integrity sha512-SRxCrrg9CL/y54aiMCG3edPKdprgMVGDXjA3gB8UmmBW5TcXzRUYAh8EWzTnSJFAd1rgImPELza+A3bJ+qxz8Q==
   dependencies:
     undici-types "~6.19.2"
 
 "@types/node@^20.9.0":
-  version "20.16.11"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.16.11.tgz#9b544c3e716b1577ac12e70f9145193f32750b33"
-  integrity sha512-y+cTCACu92FyA5fgQSAI8A1H429g7aSK2HsO7K4XYUWc4dY5IUz55JSDIYT6/VsOLfGy8vmvQYC2hfb0iF16Uw==
+  version "20.16.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.16.13.tgz#148c152d757dc73f8d65f0f6f078f39050b85b0c"
+  integrity sha512-GjQ7im10B0labo8ZGXDGROUl9k0BNyDgzfGpb4g/cl+4yYDWVKcozANF4FGr4/p0O/rAkQClM6Wiwkije++1Tg==
   dependencies:
     undici-types "~6.19.2"
 
@@ -1175,9 +1175,9 @@ electron-updater@6.3.9:
     tiny-typed-emitter "^2.1.0"
 
 electron@^32.0.0:
-  version "32.2.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-32.2.0.tgz#40b17864be5f88c89f71045ac6f61b5d4a9c1919"
-  integrity sha512-Xy82QBQrEiQysoxsv6lnhHAcWNNe6vV6QqH3OPFXhEj/T9oAsBHEhZuuYHINSSsUE7zRSj+J9sNwJYOjisT0Vw==
+  version "32.2.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-32.2.1.tgz#10b78b450c835ccccc0885129a3ea93c22cce2de"
+  integrity sha512-GCPI/5hU34pPcNltNpz+uylhhuTm9BM0N8RmrbVgaWBodLSmmcCkvpgN0BseKhO6IwQOPzWaovrcZ/nPIpfGaQ==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^20.9.0"
