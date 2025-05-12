@@ -321,10 +321,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@reteps/dockerfmt@^0.3.2":
-  version "0.3.4"
-  resolved "https://registry.yarnpkg.com/@reteps/dockerfmt/-/dockerfmt-0.3.4.tgz#26a67efc76b162cddb8d053e003328131a5008e3"
-  integrity sha512-IHIyUHVsASQmUheWTmIVxnMdOayvIa4e9XGyt1qpuz6l+dv89H8WXg/jV6PNMX9286O0m2wd3zvmNfgpp7IsCA==
+"@reteps/dockerfmt@^0.3.5":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@reteps/dockerfmt/-/dockerfmt-0.3.6.tgz#055be8a367c4b5316d3aa9c10c4c62eab2a4fce2"
+  integrity sha512-Tb5wIMvBf/nLejTQ61krK644/CEMB/cpiaIFXqGApfGqO3GwcR3qnI0DbmkFVCl2OyEp8LnLX3EkucoL0+tbFg==
 
 "@sindresorhus/is@^4.0.0":
   version "4.6.0"
@@ -2774,11 +2774,11 @@ prelude-ls@^1.2.1:
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
 prettier-plugin-sh@^0.17.0:
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-sh/-/prettier-plugin-sh-0.17.2.tgz#6d16bc1cc36c446a91aa01ff223ed94a5c6d5e92"
-  integrity sha512-7+dEo/IYbhrUj4qP+1QXj41/5Hv9ZkxBuEatI1jywrcAlVF1aGhdYJF4Sn+M67nkA16iRL53W4FSRe1bitTdmQ==
+  version "0.17.4"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-sh/-/prettier-plugin-sh-0.17.4.tgz#b6ea58f320d60be43c0fd8d7ae390bba9c488ed4"
+  integrity sha512-aAVKXZ7GTEMZdZsIPSwMwddwPvt2ibMbRGd4OJAP0G7QoeYZV+mPNg2Oln3R53sZ4PVjeAA7Xzi/PuI0QlHHfQ==
   dependencies:
-    "@reteps/dockerfmt" "^0.3.2"
+    "@reteps/dockerfmt" "^0.3.5"
     sh-syntax "^0.5.6"
 
 prettier@^3.3.2:
@@ -3078,9 +3078,9 @@ setprototypeof@1.2.0:
   integrity sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==
 
 sh-syntax@^0.5.6:
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/sh-syntax/-/sh-syntax-0.5.6.tgz#dc4668335429d4003880641ac7296384a047668b"
-  integrity sha512-hUprXSSgi3HLdIxufSsr0lceThj6vKsgOHcVVGujDGLWg9RD5Mt6j2m642qkTAU/7GFX65ed/g9h2jeURGuTlQ==
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/sh-syntax/-/sh-syntax-0.5.7.tgz#cc1e9ad4eaf22ffb0259a31505dade098de6d58a"
+  integrity sha512-74m9dt91konrF5+m0kASugzi37VxKsnTJQ6yvdDZu3IijG5/vIZpImP6FadsJLWNt2X2YD0VaTwW5W7Ox7mFVg==
   dependencies:
     tslib "^2.8.1"
 
