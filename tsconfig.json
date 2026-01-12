@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "noImplicitAny": true,
+    "strict": true,
     "sourceMap": true,
-    "target": "ES6",
+    "target": "ES2022",
     "outDir": "dist",
     "baseUrl": ".",
     "esModuleInterop": true,

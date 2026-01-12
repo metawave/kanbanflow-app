@@ -12,9 +12,7 @@ import { autoUpdater } from 'electron-updater';
 import * as pkg from '../../package.json';
 import Store from 'electron-store';
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
-let mainWindow: BrowserWindow;
+let mainWindow: BrowserWindow | null = null;
 
 // Config store for storing some settings
 const conf = new Store({
@@ -56,21 +54,28 @@ function rectContains(bigRect: Rectangle, smallRect: Rectangle): boolean {
   );
 }
 
-function getWindowConfig(): Rectangle {
-  let posX = conf.get('windowX') as number;
-  let posY = conf.get('windowY') as number;
+interface WindowConfig {
+  x: number | undefined;
+  y: number | undefined;
+  width: number;
+  height: number;
+}
+
+function getWindowConfig(): WindowConfig {
+  let posX: number | undefined = conf.get('windowX') as number;
+  let posY: number | undefined = conf.get('windowY') as number;
   const width = conf.get('windowWidth') as number;
   const height = conf.get('windowHeight') as number;
 
   // check if window is on a screen
   const displays = screen.getAllDisplays();
   const displayContainingWindow = displays.filter((display) => {
-    return rectContains(display.bounds, { x: posX, y: posY, width, height });
+    return rectContains(display.bounds, { x: posX ?? 0, y: posY ?? 0, width, height });
   });
 
   if (displayContainingWindow.length === 0) {
-    posX = null;
-    posY = null;
+    posX = undefined;
+    posY = undefined;
   }
 
   return {
@@ -82,13 +87,15 @@ function getWindowConfig(): Rectangle {
 }
 
 function handleLinkClick(e: Event | undefined, reqUrl: string): void {
+  if (!mainWindow) return;
+
   const getHost = (urlString: string): string => new URL(urlString).host;
   const reqHost = getHost(reqUrl);
 
   // is external, eg. not kanbanflow?
   if (reqHost && reqHost != getHost(mainWindow.webContents.getURL())) {
     if (e !== undefined) e.preventDefault();
-    shell.openExternal(reqUrl);
+    void shell.openExternal(reqUrl);
   }
 }
 
@@ -101,14 +108,14 @@ function createWindow(): void {
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    icon: 'appicon.ico',
     x: windowConfig.x,
     y: windowConfig.y,
     width: windowConfig.width,
     height: windowConfig.height,
     autoHideMenuBar: true,
     webPreferences: {
-      webSecurity: false,
+      contextIsolation: true,
+      sandbox: true,
       nodeIntegration: false,
       zoomFactor: zFactor,
     },
@@ -132,13 +139,13 @@ function createWindow(): void {
     {
       label: 'Edit',
       submenu: [
-        { label: 'Undo', accelerator: 'CmdOrCtrl+Z', role: 'undo' },
-        { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo' },
+        { role: 'undo' },
+        { role: 'redo' },
         { type: 'separator' },
-        { label: 'Cut', accelerator: 'CmdOrCtrl+X', role: 'cut' },
-        { label: 'Copy', accelerator: 'CmdOrCtrl+C', role: 'copy' },
-        { label: 'Paste', accelerator: 'CmdOrCtrl+V', role: 'paste' },
-        { label: 'Select All', accelerator: 'CmdOrCtrl+A', role: 'selectAll' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'selectAll' },
       ],
     },
     {
@@ -170,7 +177,7 @@ function createWindow(): void {
         {
           label: 'About',
           click(): void {
-            shell.openExternal('https://github.com/metawave/kanbanflow-app');
+            void shell.openExternal('https://github.com/metawave/kanbanflow-app');
           },
         },
       ],
@@ -182,9 +189,8 @@ function createWindow(): void {
     // Remove quit from File menu since this will be in the AppMenu
     (menuTemplate[0].submenu as MenuItemConstructorOptions[]).pop();
 
-    const name = app.getName();
     const osxMenu: MenuItemConstructorOptions = {
-      label: name,
+      label: app.getName(),
       submenu: [
         {
           label: 'Quit',
@@ -213,9 +219,11 @@ function createWindow(): void {
   }
 
   // and load the index.html of the app.
-  mainWindow.loadURL('https://kanbanflow.com');
+  void mainWindow.loadURL('https://kanbanflow.com');
 
   mainWindow.on('close', function () {
+    if (!mainWindow) return;
+
     conf.set('zoomFactor', mainWindow.webContents.zoomFactor);
 
     // Window positions and size
@@ -236,21 +244,14 @@ function createWindow(): void {
     return { action: 'deny' };
   });
 
-  // Emitted when the window is closed.
   mainWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     mainWindow = null;
   });
 
   // At last, check for app updates
-  autoUpdater.checkForUpdatesAndNotify();
+  void autoUpdater.checkForUpdatesAndNotify();
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', () => {
   createWindow();
 
@@ -261,14 +262,8 @@ app.on('ready', () => {
   });
 });
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

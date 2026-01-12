@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+# Generates all platform icons from KanbanFlowLogo.png (transparent source)
+
+set -e
+
+type magick >/dev/null 2>&1 || { echo >&2 "Cannot find required ImageMagick executable"; exit 1; }
+type iconutil >/dev/null 2>&1 || { echo >&2 "Cannot find required iconutil executable"; exit 1; }
+
+SCRIPT_DIR="${BASH_SOURCE%/*}"
+SOURCE="${SCRIPT_DIR}/../KanbanFlowLogo.png"
+RESOURCES_DIR="${SCRIPT_DIR}/../resources"
+
+if [ ! -f "${SOURCE}" ]; then
+  echo >&2 "Source image not found: ${SOURCE}"
+  echo >&2 "Export KanbanFlowLogo.png from KanbanFlow_logo_blackbg.pxd"
+  exit 1
+fi
+
+# Get source dimensions
+SOURCE_SIZE=$(magick identify -format "%w" "${SOURCE}")
+echo "Source image: ${SOURCE} (${SOURCE_SIZE}x${SOURCE_SIZE})"
+
+TEMP_DIR="$(mktemp -d)"
+trap 'rm -rf "${TEMP_DIR}"' EXIT
+
+# Generate macOS icon (black background with Apple-style rounded corners)
+echo "Generating macOS icon..."
+# macOS uses approximately 22.37% corner radius
+CORNER_RADIUS=$((SOURCE_SIZE * 2237 / 10000))
+# Create rounded black background and composite with source preserving colors
+magick -size "${SOURCE_SIZE}x${SOURCE_SIZE}" xc:none -fill black \
+  -draw "roundrectangle 0,0,$((SOURCE_SIZE-1)),$((SOURCE_SIZE-1)),${CORNER_RADIUS},${CORNER_RADIUS}" \
+  PNG32:"${TEMP_DIR}/rounded-bg.png"
+magick "${TEMP_DIR}/rounded-bg.png" "${SOURCE}" -compose Over -composite PNG32:"${TEMP_DIR}/macos-source.png"
+
+# Create iconset for macOS
+ICONSET="${TEMP_DIR}/icon.iconset"
+mkdir -p "${ICONSET}"
+for size in 16 32 64 128 256 512; do
+  magick "${TEMP_DIR}/macos-source.png" -resize "${size}x${size}" -filter Lanczos "${ICONSET}/icon_${size}x${size}.png"
+  magick "${TEMP_DIR}/macos-source.png" -resize "$((size * 2))x$((size * 2))" -filter Lanczos "${ICONSET}/icon_${size}x${size}@2x.png"
+done
+iconutil -c icns "${ICONSET}" -o "${RESOURCES_DIR}/icon.icns"
+echo "  Created ${RESOURCES_DIR}/icon.icns"
+
+# Generate Windows icon (square black background)
+echo "Generating Windows icon..."
+magick -size "${SOURCE_SIZE}x${SOURCE_SIZE}" xc:black \
+  "${SOURCE}" -composite \
+  -resize 256x256 -filter Lanczos \
+  "${RESOURCES_DIR}/icon.ico"
+echo "  Created ${RESOURCES_DIR}/icon.ico"
+
+# Generate Linux icons (square black background)
+echo "Generating Linux icons..."
+magick -size "${SOURCE_SIZE}x${SOURCE_SIZE}" xc:black \
+  "${SOURCE}" -composite \
+  "${TEMP_DIR}/linux-source.png"
+
+mkdir -p "${RESOURCES_DIR}/icons"
+for size in 16 32 48 64 128 256 512; do
+  magick "${TEMP_DIR}/linux-source.png" -resize "${size}x${size}" -filter Lanczos "${RESOURCES_DIR}/icons/${size}x${size}.png"
+  echo "  Created ${RESOURCES_DIR}/icons/${size}x${size}.png"
+done
+
+echo "Done!"

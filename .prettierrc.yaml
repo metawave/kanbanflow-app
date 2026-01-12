@@ -1,4 +1,3 @@
-# Use single quotes for strings, because that is the Angular default
 singleQuote: true
 
 # The following settings prevent excessive use of vertical space

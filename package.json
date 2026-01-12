@@ -12,17 +12,14 @@
   "main": "tsc/src/main/index.js",
   "repository": "https://github.com/metawave/kanbanflow-app.git",
   "scripts": {
-    "icons": "yarn icons-png && yarn icons-ico && yarn icons-icns",
-    "icons-png": "./bin/convertToPng KanbanFlowLogo.png resources/icons/512x512.png",
-    "icons-icns": "./bin/convertToIcns KanbanFlowLogo.png resources/icon.icns",
-    "icons-ico": "./bin/convertToIco KanbanFlowLogo.png resources/icon.ico",
+    "icons": "./bin/generateIcons KanbanFlowLogoTransparent.png",
     "build": "tsc --outDir ./tsc",
     "watch": "tsc -w --outDir ./tsc",
     "lint": "eslint ./src",
     "prettify": "prettier --write --ignore-unknown '**/*.*'",
-    "start": "yarn build && electron ./tsc/src/main/index.js",
-    "dist": "yarn build && electron-builder",
-    "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+    "start": "npm run build && electron ./tsc/src/main/index.js",
+    "dist": "npm run build && electron-builder",
+    "dist:dir": "npm run dist -- --dir -c.compression=store -c.mac.identity=null"
   },
   "build": {
     "appId": "ch.metawave.kanbanflow-app",
@@ -30,18 +27,31 @@
     "directories": {
       "buildResources": "resources"
     },
+    "mac": {
+      "target": [
+        {
+          "target": "default",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ]
+    },
     "win": {
       "target": [
         {
           "target": "portable",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         },
         {
           "target": "zip",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         }
       ]
@@ -52,7 +62,8 @@
         {
           "target": "AppImage",
           "arch": [
-            "x64"
+            "x64",
+            "arm64"
           ]
         }
       ]
@@ -60,14 +71,11 @@
   },
   "dependencies": {
     "electron-store": "^8.2.0",
-    "electron-updater": "6.6.8",
-    "url": "^0.11.0"
+    "electron-updater": "6.6.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
     "@types/semver": "^7.5.8",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
     "electron": "^39.0.0",
     "electron-builder": "^26.0.0",
     "eslint": "^9.6.0",
