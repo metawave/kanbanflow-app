@@ -71,7 +71,7 @@
   },
   "dependencies": {
     "electron-store": "^8.2.0",
-    "electron-updater": "6.7.3"
+    "electron-updater": "6.8.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
