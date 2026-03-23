@@ -9,7 +9,7 @@
     "app",
     "webapp"
   ],
-  "main": "tsc/src/main/index.js",
+  "main": "tsc/index.js",
   "repository": "https://github.com/metawave/kanbanflow-app.git",
   "scripts": {
     "icons": "./bin/generateIcons KanbanFlowLogoTransparent.png",
@@ -17,13 +17,14 @@
     "watch": "tsc -w --outDir ./tsc",
     "lint": "eslint ./src",
     "prettify": "prettier --write --ignore-unknown '**/*.*'",
-    "start": "npm run build && electron ./tsc/src/main/index.js",
+    "start": "npm run build && electron ./tsc/index.js",
     "dist": "npm run build && electron-builder",
     "dist:dir": "npm run dist -- --dir -c.compression=store -c.mac.identity=null"
   },
   "build": {
     "appId": "ch.metawave.kanbanflow-app",
     "productName": "KanbanFlow App",
+    "files": ["tsc/**/*", "package.json"],
     "directories": {
       "buildResources": "resources"
     },
@@ -70,7 +71,6 @@
     }
   },
   "dependencies": {
-    "electron-store": "^8.2.0",
     "electron-updater": "6.8.3"
   },
   "devDependencies": {

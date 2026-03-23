@@ -9,41 +9,47 @@ import {
   shell,
 } from 'electron';
 import { autoUpdater } from 'electron-updater';
-import * as pkg from '../../package.json';
-import Store from 'electron-store';
+import * as fs from 'fs';
+import * as path from 'path';
 
 let mainWindow: BrowserWindow | null = null;
 
-// Config store for storing some settings
-const conf = new Store({
-  name: pkg.name,
-  schema: {
-    zoomFactor: {
-      type: 'number',
-      default: 1.0,
-    },
-    windowX: {
-      type: 'number',
-      default: 0,
-    },
-    windowY: {
-      type: 'number',
-      default: 0,
-    },
-    windowWidth: {
-      type: 'number',
-      default: 1440,
-    },
-    windowHeight: {
-      type: 'number',
-      default: 900,
-    },
-    windowMaximized: {
-      type: 'boolean',
-      default: false,
-    },
-  },
-});
+interface AppConfig {
+  zoomFactor: number;
+  windowX: number;
+  windowY: number;
+  windowWidth: number;
+  windowHeight: number;
+  windowMaximized: boolean;
+}
+
+const defaults: AppConfig = {
+  zoomFactor: 1.0,
+  windowX: 0,
+  windowY: 0,
+  windowWidth: 1440,
+  windowHeight: 900,
+  windowMaximized: false,
+};
+
+function getConfigPath(): string {
+  return path.join(app.getPath('userData'), 'config.json');
+}
+
+function loadConfig(): AppConfig {
+  try {
+    const data = fs.readFileSync(getConfigPath(), 'utf-8');
+    return { ...defaults, ...(JSON.parse(data) as Partial<AppConfig>) };
+  } catch {
+    return { ...defaults };
+  }
+}
+
+function saveConfig(config: AppConfig): void {
+  fs.writeFileSync(getConfigPath(), JSON.stringify(config, null, 2));
+}
+
+let conf = defaults;
 
 function rectContains(bigRect: Rectangle, smallRect: Rectangle): boolean {
   return (
@@ -62,10 +68,10 @@ interface WindowConfig {
 }
 
 function getWindowConfig(): WindowConfig {
-  let posX: number | undefined = conf.get('windowX') as number;
-  let posY: number | undefined = conf.get('windowY') as number;
-  const width = conf.get('windowWidth') as number;
-  const height = conf.get('windowHeight') as number;
+  let posX: number | undefined = conf.windowX;
+  let posY: number | undefined = conf.windowY;
+  const width = conf.windowWidth;
+  const height = conf.windowHeight;
 
   // check if window is on a screen
   const displays = screen.getAllDisplays();
@@ -100,8 +106,7 @@ function handleLinkClick(e: Event | undefined, reqUrl: string): void {
 }
 
 function createWindow(): void {
-  // restore some settings
-  const zFactor = conf.get('zoomFactor') as number | undefined;
+  const zFactor = conf.zoomFactor;
 
   // get window config
   const windowConfig = getWindowConfig();
@@ -207,8 +212,7 @@ function createWindow(): void {
   // open devtools
   //mainWindow.webContents.openDevTools();
 
-  // if it was previously maximized, we do that now
-  if (conf.get('windowMaximized')) {
+  if (conf.windowMaximized) {
     mainWindow.maximize();
   }
 
@@ -224,17 +228,15 @@ function createWindow(): void {
   mainWindow.on('close', function () {
     if (!mainWindow) return;
 
-    conf.set('zoomFactor', mainWindow.webContents.zoomFactor);
-
-    // Window positions and size
     const windowBounds = mainWindow.getBounds();
-    conf.set('windowX', windowBounds.x);
-    conf.set('windowY', windowBounds.y);
-    conf.set('windowWidth', windowBounds.width);
-    conf.set('windowHeight', windowBounds.height);
-
-    // Is it maximized?
-    conf.set('windowMaximized', mainWindow.isMaximized());
+    saveConfig({
+      zoomFactor: mainWindow.webContents.zoomFactor,
+      windowX: windowBounds.x,
+      windowY: windowBounds.y,
+      windowWidth: windowBounds.width,
+      windowHeight: windowBounds.height,
+      windowMaximized: mainWindow.isMaximized(),
+    });
   });
 
   // open external links always in system browser instead of kanban app
@@ -253,6 +255,7 @@ function createWindow(): void {
 }
 
 app.on('ready', () => {
+  conf = loadConfig();
   createWindow();
 
   app.on('activate', function () {
