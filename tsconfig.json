@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "nodenext",
     "strict": true,
     "sourceMap": true,
-    "target": "ES2022",
-    "outDir": "dist",
-    "baseUrl": ".",
+    "target": "ES2023",
+    "outDir": "tsc",
+    "rootDir": "./src/main",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "skipLibCheck": true
   },
   "include": ["src/**/*"]
 }

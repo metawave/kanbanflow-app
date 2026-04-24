@@ -13,8 +13,8 @@
   "repository": "https://github.com/metawave/kanbanflow-app.git",
   "scripts": {
     "icons": "./bin/generateIcons KanbanFlowLogoTransparent.png",
-    "build": "tsc --outDir ./tsc",
-    "watch": "tsc -w --outDir ./tsc",
+    "build": "tsc",
+    "watch": "tsc -w",
     "lint": "eslint ./src",
     "prettify": "prettier --write --ignore-unknown '**/*.*'",
     "start": "npm run build && electron ./tsc/index.js",
@@ -24,7 +24,10 @@
   "build": {
     "appId": "ch.metawave.kanbanflow-app",
     "productName": "KanbanFlow App",
-    "files": ["tsc/**/*", "package.json"],
+    "files": [
+      "tsc/**/*",
+      "package.json"
+    ],
     "directories": {
       "buildResources": "resources"
     },
@@ -75,14 +78,13 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",
-    "@types/semver": "^7.5.8",
     "electron": "^41.0.0",
     "electron-builder": "^26.6.0",
     "eslint": "^10.0.0",
     "globals": "^17.0.0",
     "prettier": "^3.3.2",
     "prettier-plugin-sh": "^0.18.0",
-    "typescript": "^5.5.3",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.0.0"
   }
 }
