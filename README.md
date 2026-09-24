@@ -14,7 +14,8 @@ Use the menu to increase/decrease the zoom-factor and to reload the webapp, when
 
 ## Development
 
-Requirements: Node.js, Rust and the [Tauri prerequisites](https://tauri.app/start/prerequisites/) for your platform.
+Requirements: Node.js and Rust (`mise install` sets up both from `mise.toml`) plus the
+[Tauri prerequisites](https://tauri.app/start/prerequisites/) for your platform (on macOS: Xcode Command Line Tools).
 
 ```sh
 npm install
