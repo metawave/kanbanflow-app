@@ -2,6 +2,9 @@ name: Build/Release
 
 on: push
 
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-22.04
@@ -25,8 +28,19 @@ jobs:
         with:
           workspaces: src-tauri -> target
 
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24.x'
+          cache: npm
+
+      - name: Install NPM dependencies
+        run: npm ci
+
       - name: Check formatting
-        run: cargo fmt --manifest-path src-tauri/Cargo.toml --check
+        run: |
+          npx prettier --check .
+          cargo fmt --manifest-path src-tauri/Cargo.toml --check
 
       - name: Clippy
         run: cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings
@@ -34,6 +48,9 @@ jobs:
   release:
     needs: check
     runs-on: ${{ matrix.os }}
+
+    permissions:
+      contents: write # tauri-action uploads to GitHub Releases
 
     strategy:
       fail-fast: false

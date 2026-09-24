@@ -4,8 +4,14 @@
 
 set -e
 
-type magick >/dev/null 2>&1 || { echo >&2 "Cannot find required ImageMagick executable"; exit 1; }
-type iconutil >/dev/null 2>&1 || { echo >&2 "Cannot find required iconutil executable"; exit 1; }
+type magick > /dev/null 2>&1 || {
+  echo >&2 "Cannot find required ImageMagick executable"
+  exit 1
+}
+type iconutil > /dev/null 2>&1 || {
+  echo >&2 "Cannot find required iconutil executable"
+  exit 1
+}
 
 SCRIPT_DIR="${BASH_SOURCE%/*}"
 SOURCE="${SCRIPT_DIR}/../KanbanFlowLogo.png"
@@ -30,7 +36,7 @@ echo "Generating macOS icon..."
 CORNER_RADIUS=$((SOURCE_SIZE * 2237 / 10000))
 # Create rounded black background and composite with source preserving colors
 magick -size "${SOURCE_SIZE}x${SOURCE_SIZE}" xc:none -fill black \
-  -draw "roundrectangle 0,0,$((SOURCE_SIZE-1)),$((SOURCE_SIZE-1)),${CORNER_RADIUS},${CORNER_RADIUS}" \
+  -draw "roundrectangle 0,0,$((SOURCE_SIZE - 1)),$((SOURCE_SIZE - 1)),${CORNER_RADIUS},${CORNER_RADIUS}" \
   PNG32:"${TEMP_DIR}/rounded-bg.png"
 magick "${TEMP_DIR}/rounded-bg.png" "${SOURCE}" -compose Over -composite PNG32:"${TEMP_DIR}/macos-source.png"
 
