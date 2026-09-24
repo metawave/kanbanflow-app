@@ -9,9 +9,12 @@ dist/
 
 # Ignore Build
 build/
-tsc/
 
 # Ignore Platform Files
 .DS_Store
 Thumbs.db
 CLAUDE.md
+
+# Ignore Tauri build output
+src-tauri/target/
+src-tauri/gen/
