@@ -2,13 +2,12 @@ name: Build/Release
 
 on: push
 
-jobs:
-  release:
-    runs-on: ${{ matrix.os }}
+permissions:
+  contents: read
 
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out Git repository
@@ -18,14 +17,50 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: '24.x'
+          cache: npm
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Check formatting
+        run: npx prettier --check .
+
+  release:
+    needs: lint
+    runs-on: ${{ matrix.os }}
+
+    permissions:
+      contents: write # electron-builder uploads to GitHub Releases
+
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            platform: mac
+          - os: ubuntu-latest
+            platform: linux
+          - os: windows-latest
+            platform: win
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v7
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@v7
         with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
+          node-version: '24.x'
+          cache: npm
 
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      - name: Install dependencies
+        run: npm ci
+
+      # Tagged with a version (e.g. "v1.0.0"): release the app after building.
+      # Otherwise upload to a matching draft release, if one exists (electron-builder "onTagOrDraft").
+      - name: Build/release Electron app
+        run: npm run dist -- --${{ matrix.platform }} --publish ${{ startsWith(github.ref, 'refs/tags/v') && 'always' || 'onTagOrDraft' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
