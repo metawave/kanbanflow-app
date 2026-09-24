@@ -31,7 +31,7 @@ jobs:
       - name: Install Node.js and NPM
         uses: actions/setup-node@v7
         with:
-          node-version: '24.x'
+          node-version: '24.0.2'
           cache: npm
 
       - name: Install NPM dependencies
@@ -82,7 +82,7 @@ jobs:
       - name: Install Node.js and NPM
         uses: actions/setup-node@v7
         with:
-          node-version: '24.x'
+          node-version: '24.0.2'
           cache: npm
 
       - name: Install Rust
