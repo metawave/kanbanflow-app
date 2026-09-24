@@ -12,7 +12,7 @@
   "main": "tsc/index.js",
   "repository": "https://github.com/metawave/kanbanflow-app.git",
   "scripts": {
-    "icons": "./bin/generateIcons KanbanFlowLogoTransparent.png",
+    "icons": "./bin/generateIcons",
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "oxlint src",
