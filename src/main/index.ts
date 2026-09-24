@@ -1,9 +1,11 @@
 import {
   app,
   BrowserWindow,
+  dialog,
   Event,
   Menu,
   MenuItemConstructorOptions,
+  net,
   Rectangle,
   screen,
   shell,
@@ -254,9 +256,43 @@ function createWindow(): void {
   void autoUpdater.checkForUpdatesAndNotify();
 }
 
+// This is the last Electron version: the app moved to Tauri, which can't be installed via
+// electron-updater. Only Tauri releases ship a latest.json, so its presence tells us to point the
+// user to the new download.
+const TAURI_UPDATE_MANIFEST_URL =
+  'https://github.com/metawave/kanbanflow-app/releases/latest/download/latest.json';
+const DOWNLOAD_URL = 'https://github.com/metawave/kanbanflow-app/releases/latest';
+
+async function notifyAboutNewApp(): Promise<void> {
+  try {
+    const response = await net.fetch(TAURI_UPDATE_MANIFEST_URL);
+    if (!response.ok) return;
+  } catch {
+    return;
+  }
+  if (!mainWindow) return;
+
+  const { response } = await dialog.showMessageBox(mainWindow, {
+    type: 'info',
+    title: 'New KanbanFlow App available',
+    message: 'A new version of KanbanFlow App is available.',
+    detail:
+      'The app has been rebuilt: it is much smaller and uses less memory. ' +
+      'It cannot be updated automatically, please download and install the new version. ' +
+      'You will need to log in to KanbanFlow once again.',
+    buttons: ['Download', 'Later'],
+    defaultId: 0,
+    cancelId: 1,
+  });
+  if (response === 0) {
+    await shell.openExternal(DOWNLOAD_URL);
+  }
+}
+
 app.on('ready', () => {
   conf = loadConfig();
   createWindow();
+  void notifyAboutNewApp();
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
