@@ -54,7 +54,7 @@ echo "  Created ${RESOURCES_DIR}/icon.icns"
 echo "Generating Windows icon..."
 magick -size "${SOURCE_SIZE}x${SOURCE_SIZE}" xc:black \
   "${SOURCE}" -composite \
-  -resize 256x256 -filter Lanczos \
+  -define icon:auto-resize=256,64,48,32,24,16 \
   "${RESOURCES_DIR}/icon.ico"
 echo "  Created ${RESOURCES_DIR}/icon.ico"
 
@@ -66,7 +66,7 @@ magick -size "${SOURCE_SIZE}x${SOURCE_SIZE}" xc:black \
 
 mkdir -p "${RESOURCES_DIR}/icons"
 for size in 16 32 48 64 128 256 512; do
-  magick "${TEMP_DIR}/linux-source.png" -resize "${size}x${size}" -filter Lanczos "${RESOURCES_DIR}/icons/${size}x${size}.png"
+  magick "${TEMP_DIR}/linux-source.png" -resize "${size}x${size}" -filter Lanczos -depth 8 PNG32:"${RESOURCES_DIR}/icons/${size}x${size}.png"
   echo "  Created ${RESOURCES_DIR}/icons/${size}x${size}.png"
 done
 

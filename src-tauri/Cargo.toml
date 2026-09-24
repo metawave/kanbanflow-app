@@ -1,0 +1,26 @@
+[package]
+name = "kanbanflow-app"
+# the app version is taken from package.json (see tauri.conf.json)
+version = "0.0.0"
+description = "A application showing the Kanbanflow Website/App"
+authors = ["Marcel Ryser"]
+license = "MIT"
+repository = "https://github.com/metawave/kanbanflow-app"
+edition = "2021"
+publish = false
+
+[lib]
+name = "kanbanflow_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-updater = "2"
+tauri-plugin-window-state = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

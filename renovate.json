@@ -4,9 +4,9 @@
   "rangeStrategy": "bump",
   "packageRules": [
     {
-      "description": "oxlint-tsgolint tracks the TypeScript version, update both together",
-      "groupName": "typescript",
-      "matchPackageNames": ["typescript", "oxlint-tsgolint"]
+      "description": "Tauri crates and CLI must be updated together",
+      "matchPackageNames": ["tauri", "tauri-build", "/^tauri-plugin-/", "@tauri-apps/cli"],
+      "groupName": "tauri"
     }
   ]
 }

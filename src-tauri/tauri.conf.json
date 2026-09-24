@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "KanbanFlow App",
+  "version": "../package.json",
+  "identifier": "ch.metawave.kanbanflow-app",
+  "app": {
+    "windows": [],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg", "nsis", "appimage", "deb"],
+    "category": "Productivity",
+    "shortDescription": "KanbanFlow as a standalone desktop app",
+    "icon": [
+      "../resources/icons/16x16.png",
+      "../resources/icons/32x32.png",
+      "../resources/icons/48x48.png",
+      "../resources/icons/64x64.png",
+      "../resources/icons/128x128.png",
+      "../resources/icons/256x256.png",
+      "../resources/icons/512x512.png",
+      "../resources/icon.icns",
+      "../resources/icon.ico"
+    ],
+    "createUpdaterArtifacts": true
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDc0REVFMUFDRkQ4RkU4MzIKUldReTZJLzlyT0hlZE56OTNoZ3dGWEc2cUg4dWVZSDlaVU44SXJsSUM0TnBUV0FscWpZd1FMck0K",
+      "endpoints": [
+        "https://github.com/metawave/kanbanflow-app/releases/latest/download/latest.json"
+      ]
+    }
+  }
+}
