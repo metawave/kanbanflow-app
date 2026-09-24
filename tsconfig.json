@@ -3,7 +3,7 @@
     "module": "nodenext",
     "strict": true,
     "sourceMap": true,
-    "target": "ES2023",
+    "target": "ES2025",
     "outDir": "tsc",
     "rootDir": "./src/main",
     "esModuleInterop": true,
