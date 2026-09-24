@@ -29,7 +29,7 @@ Pushing a tag `v*` builds all platforms and creates a draft release on GitHub.
 
 The app checks `latest.json` of the latest GitHub release for updates. Updates must be signed:
 
-1. Generate a key pair once: `npx tauri signer generate -w ~/.tauri/kanbanflow-app.key`
+1. Generate a key pair once: `npx @tauri-apps/cli signer generate -w ~/.tauri/kanbanflow-app.key`
 2. Add the private key and its password as repository secrets `TAURI_SIGNING_PRIVATE_KEY` and
    `TAURI_SIGNING_PRIVATE_KEY_PASSWORD`.
 3. Put the public key into `plugins.updater.pubkey` and set `bundle.createUpdaterArtifacts` to
