@@ -1,6 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
+  "rangeStrategy": "bump",
   "packageRules": [
     {
       "description": "oxlint-tsgolint tracks the TypeScript version, update both together",
