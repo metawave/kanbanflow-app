@@ -4,12 +4,6 @@
 # Ignore node_modules
 node_modules/
 
-# Ignore Distribution
-dist/
-
-# Ignore Build
-build/
-
 # Ignore Platform Files
 .DS_Store
 Thumbs.db

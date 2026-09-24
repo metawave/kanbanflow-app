@@ -18,9 +18,10 @@ Requirements: Node.js, Rust and the [Tauri prerequisites](https://tauri.app/star
 
 ```sh
 npm install
-npm start    # run the app in development mode
-npm run lint # clippy
-npm run dist # build the installers for the current platform
+npm start             # run the app in development mode
+npm run lint          # clippy
+npm run dist          # build the installers for the current platform
+npm run dist:unsigned # same, without the updater signing key
 ```
 
 ## Releases and updates

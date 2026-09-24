@@ -15,7 +15,10 @@
     "category": "Productivity",
     "shortDescription": "KanbanFlow as a standalone desktop app",
     "icon": [
+      "../resources/icons/16x16.png",
       "../resources/icons/32x32.png",
+      "../resources/icons/48x48.png",
+      "../resources/icons/64x64.png",
       "../resources/icons/128x128.png",
       "../resources/icons/256x256.png",
       "../resources/icons/512x512.png",

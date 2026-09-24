@@ -17,6 +17,7 @@
     "lint": "cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings",
     "prettify": "prettier --write --ignore-unknown '**/*.*'",
     "dist": "tauri build",
+    "dist:unsigned": "tauri build --no-sign",
     "tauri": "tauri"
   },
   "devDependencies": {

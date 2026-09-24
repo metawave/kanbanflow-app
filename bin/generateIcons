@@ -13,7 +13,7 @@ RESOURCES_DIR="${SCRIPT_DIR}/../resources"
 
 if [ ! -f "${SOURCE}" ]; then
   echo >&2 "Source image not found: ${SOURCE}"
-  echo >&2 "Export KanbanFlowLogo.png from KanbanFlow_logo_blackbg.pxd"
+  echo >&2 "Export KanbanFlowLogo.png from KanbanFlowLogo.pxd"
   exit 1
 fi
 
@@ -48,7 +48,7 @@ echo "  Created ${RESOURCES_DIR}/icon.icns"
 echo "Generating Windows icon..."
 magick -size "${SOURCE_SIZE}x${SOURCE_SIZE}" xc:black \
   "${SOURCE}" -composite \
-  -resize 256x256 -filter Lanczos \
+  -define icon:auto-resize=256,64,48,32,24,16 \
   "${RESOURCES_DIR}/icon.ico"
 echo "  Created ${RESOURCES_DIR}/icon.ico"
 

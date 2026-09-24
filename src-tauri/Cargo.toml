@@ -1,5 +1,6 @@
 [package]
 name = "kanbanflow-app"
+# the app version is taken from package.json (see tauri.conf.json)
 version = "0.0.0"
 description = "A application showing the Kanbanflow Website/App"
 authors = ["Marcel Ryser"]
