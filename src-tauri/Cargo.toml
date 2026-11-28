@@ -14,10 +14,10 @@ name = "kanbanflow_app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2.7.6", features = [] }
+tauri-build = { version = "2.8.0", features = [] }
 
 [dependencies]
-tauri = { version = "2.12.7", features = [] }
+tauri = { version = "2.13.0", features = [] }
 tauri-plugin-dialog = "2.8.4"
 tauri-plugin-opener = "2.7.3"
 tauri-plugin-updater = "2.14.1"
