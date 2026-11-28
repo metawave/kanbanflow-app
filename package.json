@@ -21,7 +21,7 @@
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^2.12.6",
+    "@tauri-apps/cli": "^2.13.0",
     "prettier": "^3.10.1",
     "prettier-plugin-sh": "^0.20.2"
   }
